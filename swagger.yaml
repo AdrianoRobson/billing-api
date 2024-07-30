@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: Billing API
+  description: This API describes the endpoints to register the use of external APIs.
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://localhost:6001/api/v1/billing
+  variables: {}
+paths:
+  /usage:
+    post:
+      tags:
+      - APIUsage
+      summary: Set usage
+      operationId: setUsage
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  description: Company identifier
+                  example: "1"
+                callerId:
+                  type: string
+                  description: Identifier of the person who made the call
+                  example: "17988310949"
+                quantityOfOperationAttempts:
+                  type: string
+                  description: Number of attempts to perform the operation made by the person who made the call
+                  example: "2"
+                chosenOperation:
+                  type: string
+                  description: Operation chosen by the person who made the call
+                  example: "unblokUser"
+                requestLogsOpenAI:
+                  type: string
+                  description: Response logs of requests made to openai
+                  example: "{}"
+                responseErrorLogsOpenAI:
+                  type: string
+                  description: Openai error request response logs
+                  example: "{}"
+                quantityOfCallsToFalconFlowAPI:
+                  type: string
+                  description: Number of requests made to third-party api
+                  example: "2"
+                requestLogsFalconFlowAPI:
+                  type: string
+                  description: Response logs of requests made to third-party api
+                  example: "{}"
+                responseErrorLogsFalconFlowAPI:
+                  type: string
+                  description: Third-party api error request response logs
+                  example: "{}"
+                provider:
+                  type: string
+                  description: Identifier of the organization providing the AI ​​solution
+                  example: "openai"
+                product:
+                  type: string
+                  description: Product provided by the organization that is providing AI solution
+                  example: "whisper"
+                usage:
+                  type: integer
+                  description: "Using the API. The product Whisper should be sent in seconds"
+                  example: 15
+              required:
+                - companyId
+                - callerId
+                - quantityOfOperationAttempts
+                - chosenOperation
+                - requestLogsOpenAI 
+                - quantityOfCallsToFalconFlowAPI
+                - requestLogsFalconFlowAPI 
+                - provider
+                - product
+                - usage
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags: 
+- name: APIUsage

@@ -1,0 +1,46 @@
+[
+  {
+    "name": "pt-BR-Wavenet-A",
+    "ssmlGender": "FEMALE",
+    "languageCode": "pt-BR"
+  },
+  { "name": "pt-BR-Wavenet-B", "ssmlGender": "MALE", "languageCode": "pt-BR" },
+  {
+    "name": "pt-BR-Wavenet-C",
+    "ssmlGender": "FEMALE",
+    "languageCode": "pt-BR"
+  },
+  {
+    "name": "pt-BR-Standard-A",
+    "ssmlGender": "FEMALE",
+    "languageCode": "pt-BR"
+  },
+  { "name": "pt-BR-Standard-B", "ssmlGender": "MALE", "languageCode": "pt-BR" },
+  {
+    "name": "pt-BR-Standard-C",
+    "ssmlGender": "FEMALE",
+    "languageCode": "pt-BR"
+  },
+  {
+    "name": "pt-BR-Neural2-A",
+    "ssmlGender": "FEMALE",
+    "languageCode": "pt-BR"
+  },
+  { "name": "pt-BR-Neural2-B", "ssmlGender": "MALE", "languageCode": "pt-BR" },
+  {
+    "name": "pt-BR-Neural2-C",
+    "ssmlGender": "FEMALE",
+    "languageCode": "pt-BR"
+  },
+  {
+    "name": "pt-BR-Standard-A",
+    "ssmlGender": "FEMALE",
+    "languageCode": "pt-BR"
+  },
+  { "name": "pt-BR-Standard-B", "ssmlGender": "MALE", "languageCode": "pt-BR" },
+  {
+    "name": "pt-BR-Standard-C",
+    "ssmlGender": "FEMALE",
+    "languageCode": "pt-BR"
+  }
+]

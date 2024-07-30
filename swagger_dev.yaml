@@ -1,0 +1,216 @@
+openapi: 3.0.0
+info:
+  title: Natural Language API Google
+  description: This API describes the endpoints and parameters to use resources from Google Cloud API.
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://localhost:6001/api/v1/nl
+  variables: {}
+paths:
+  /upload-audio-to-transcript:
+    post:
+      tags:
+      - Speech to text async
+      summary: Speech to text job
+      operationId: Speechtotextjob
+      parameters: []
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding: {}
+            schema:
+              required:
+              - audio 
+              type: object
+              properties:
+                audio:
+                  type: string
+                  format: binary
+                languageCode:
+                  type: string
+                  description: 'If not provided, the default will be: pt-BR'
+                  example: pt-BR
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /query-job-status:
+    get:
+      tags:
+      - Speech to text async
+      summary: Speech to text job process
+      operationId: Speechtotextjobprocess
+      parameters:
+      - name: operationName
+        in: query
+        description: 'The job id returned after uploading the audio file that will be transcribed.'
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          example: 2993135803178989324
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /speech-to-text:
+    post:
+      tags:
+      - Speech to text sync
+      summary: Speech to text
+      operationId: Speechtotext
+      parameters: []
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding: {}
+            schema:
+              required:
+              - audio 
+              type: object
+              properties:
+                audio:
+                  type: string
+                  format: binary
+                languageCode:
+                  description: 'If not provided, the default will be: pt-BR'
+                  type: string 
+                  example: pt-BR
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /sentiment:
+    post:
+      tags:
+      - Sentiment
+      summary: Get sentiment
+      operationId: Getsentiment
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/GetsentimentRequest'
+              - example:
+                  text: Toda vez a mesma coisa ja to cansado de ficar ligando pra resolver esses problemas de conexão!
+            example:
+              text: Toda vez a mesma coisa ja to cansado de ficar ligando pra resolver esses problemas de conexão!
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /text-to-speech:
+    get:
+      tags:
+      - Text to speech
+      summary: Text to speech
+      operationId: Texttospeech
+      parameters:
+      - name: text
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: Vela branca na enxurrada la vou eu de léo em léo, se o navio é pequeno do tamanho de um chapeu, não importa a volta ao mundo, é viagem de brinquedo em um barquinho de papel.
+      - name: voice_name
+        in: query
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: pt-BR-Wavenet-C
+      - name: voice_gender
+        in: query
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: FEMALE
+      - name: languageCode
+        in: query
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: pt-BR
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /voice-config:
+    get:
+      tags:
+      - Text to speech
+      summary: Get voice config
+      operationId: Getvoiceconfig
+      parameters:
+      - name: languageCode
+        in: query
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: pt-Br
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    GetsentimentRequest:
+      title: GetsentimentRequest
+      required:
+      - text
+      type: object
+      properties:
+        text:
+          type: string
+      example:
+        text: Toda vez a mesma coisa ja to cansado de ficar ligando pra resolver esses problemas de conexão!
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: Speech to text async
+- name: Speech to text sync
+- name: Sentiment
+- name: Text to speech
