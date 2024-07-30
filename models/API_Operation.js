@@ -19,6 +19,10 @@ const apiOperation = new Schema({
         type: String,
         required: true,
     }, 
+    quantityOfAttempts: {
+        type: String,
+        required: true,
+    }, 
 
 }, { timestamps: true })
  

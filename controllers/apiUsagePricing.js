@@ -47,16 +47,14 @@ const registerUsage = async (req, res) => {
         usage,
         callerId,
         sessionId,
-        companyId,
-        quantityOfOperationAttempts,
+        companyId, 
 
     } = req.body
 
     mustContainProperties(req, [
         'companyId',
         'callerId',
-        'sessionId',
-        'quantityOfOperationAttempts',
+        'sessionId', 
         'provider',
         'product',
         'usage',
@@ -75,8 +73,7 @@ const registerUsage = async (req, res) => {
             provider: provider.trim().toLowerCase(),
             product: product.trim().toLowerCase(),
             callerId,
-            sessionId,
-            quantityOfOperationAttempts,
+            sessionId, 
             usage,
             price,
             billingBy,
@@ -130,23 +127,103 @@ const registerOperation = async (req, res) => {
         companyId,
         sessionId,
         operation,
+        quantityOfOperationAttempts: quantityOfAttempts,
     } = req.body
-
+  
     mustContainProperties(req, [
         'companyId',
         'callerId',
         'sessionId',
-        'operation'
+        'operation', 
     ])
 
     const apiOperation = await API_Operation.create({
         callerId,
         companyId,
         sessionId,
-        operation
+        operation,
+        quantityOfAttempts
     })
 
     res.status(StatusCodes.OK).json({ apiOperation })
+}
+
+const registerAll = async (req, res) => {
+    const {
+        callerId,
+        companyId,
+        sessionId,
+        lstUsage,
+        lstRequest,
+        lstOperation,
+    } = req.body
+
+    if (lstUsage) {
+        for (const used of lstUsage) {
+
+            const { product, provider, usage } = used
+
+            const apiPricing = await API_Pricing.findOne({
+                provider: provider.trim().toLowerCase(),
+                product: product.trim().toLowerCase(),
+            })
+
+            if (apiPricing) {
+
+                const { price, billingBy, billingUnit } = apiPricing
+
+                const apiUsage = await API_Usage.create({
+                    provider: provider.trim().toLowerCase(),
+                    product: product.trim().toLowerCase(),
+                    callerId,
+                    sessionId, 
+                    usage,
+                    price,
+                    billingBy,
+                    billingUnit,
+                    companyId,
+                    total_cost: calculateApiUsage(price, billingUnit, usage, billingBy)
+                })
+
+            }
+
+        }
+    }
+    if (lstRequest) {
+        for (const request of lstRequest) {
+
+            const { type,
+                requestLogs,
+                responseError,
+                quantityOfAPICall } = request
+
+            const apiCall = await API_Call.create({
+                callerId,
+                companyId,
+                sessionId,
+                type,
+                requestLogs,
+                responseError,
+                quantityOfAPICall
+            })
+
+        }
+    }
+    if (lstOperation) {
+        for (const op of lstOperation) {
+            const { operation, quantityOfOperationAttempts: quantityOfAttempts } = op
+
+            const apiOperation = await API_Operation.create({
+                callerId,
+                companyId,
+                sessionId,
+                operation,
+                quantityOfAttempts
+            })
+        }
+    }
+
+    res.send(StatusCodes.OK) 
 }
 
 const getUsage = async (req, res) => {
@@ -177,5 +254,6 @@ module.exports = {
     registerUsage,
     registerAPICall,
     registerOperation,
-    getUsage
+    getUsage,
+    registerAll
 }

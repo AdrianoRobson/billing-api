@@ -15,10 +15,10 @@ const apiUsage = new Schema({
         type: String,
         required: true,
     }, 
-    quantityOfOperationAttempts: {
-        type: String,
-        required: true,
-    },
+    // quantityOfOperationAttempts: {
+    //     type: String,
+    //     required: true,
+    // },
     // chosenOperation: {
     //     type: String,
     //     required: true,
