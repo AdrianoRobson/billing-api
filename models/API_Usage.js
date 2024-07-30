@@ -11,33 +11,37 @@ const apiUsage = new Schema({
         type: String,
         required: true,
     },
+    sessionId: {
+        type: String,
+        required: true,
+    }, 
     quantityOfOperationAttempts: {
         type: String,
         required: true,
     },
-    chosenOperation: {
-        type: String,
-        required: true,
-    },
-    requestLogsOpenAI: {
-        type: String,
-        required: true,
-    },
-    responseErrorLogsOpenAI: {
-        type: String, 
-    },
-    quantityOfCallsToFalconFlowAPI: {
-        type: String,
-        required: true,
-    },
-    requestLogsFalconFlowAPI: {
-        type: String,
-        required: true,
-    },
-    responseErrorLogsFalconFlowAPI: {
-        type: String,
-        required: true,
-    },
+    // chosenOperation: {
+    //     type: String,
+    //     required: true,
+    // },
+    // requestLogsOpenAI: {
+    //     type: String,
+    //     required: true,
+    // },
+    // responseErrorLogsOpenAI: {
+    //     type: String, 
+    // },
+    // quantityOfCallsToFalconFlowAPI: {
+    //     type: String,
+    //     required: true,
+    // },
+    // requestLogsFalconFlowAPI: {
+    //     type: String,
+    //     required: true,
+    // },
+    // responseErrorLogsFalconFlowAPI: {
+    //     type: String,
+    //     required: true,
+    // },
     provider: {
         type: String,
         required: true,

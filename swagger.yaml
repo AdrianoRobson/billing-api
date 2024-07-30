@@ -24,68 +24,82 @@ paths:
               properties:
                 companyId:
                   type: string
-                  description: Company identifier
                   example: "1"
                 callerId:
                   type: string
-                  description: Identifier of the person who made the call
                   example: "17988310949"
                 quantityOfOperationAttempts:
                   type: string
-                  description: Number of attempts to perform the operation made by the person who made the call
                   example: "2"
                 chosenOperation:
                   type: string
-                  description: Operation chosen by the person who made the call
                   example: "unblokUser"
                 requestLogsOpenAI:
                   type: string
-                  description: Response logs of requests made to openai
                   example: "{}"
                 responseErrorLogsOpenAI:
                   type: string
-                  description: Openai error request response logs
                   example: "{}"
                 quantityOfCallsToFalconFlowAPI:
                   type: string
-                  description: Number of requests made to third-party api
                   example: "2"
                 requestLogsFalconFlowAPI:
                   type: string
-                  description: Response logs of requests made to third-party api
                   example: "{}"
                 responseErrorLogsFalconFlowAPI:
                   type: string
-                  description: Third-party api error request response logs
                   example: "{}"
                 provider:
                   type: string
-                  description: Identifier of the organization providing the AI ​​solution
                   example: "openai"
                 product:
                   type: string
-                  description: Product provided by the organization that is providing AI solution
                   example: "whisper"
                 usage:
-                  type: integer
-                  description: "Using the API. The product Whisper should be sent in seconds"
-                  example: 15
+                  type: string
+                  description: "Time in seconds"
+                  example: "15"
               required:
                 - companyId
                 - callerId
                 - quantityOfOperationAttempts
                 - chosenOperation
-                - requestLogsOpenAI 
+                - requestLogsOpenAI
+                - responseErrorLogsOpenAI
                 - quantityOfCallsToFalconFlowAPI
-                - requestLogsFalconFlowAPI 
+                - requestLogsFalconFlowAPI
+                - responseErrorLogsFalconFlowAPI
                 - provider
                 - product
                 - usage
         required: true
       responses:
         '200':
-          description: ''
-          headers: {}
+          description: 'Successful response'
+          content:
+            application/json:
+              example:
+                apiUsage:
+                  companyId: "1"
+                  callerId: "17988310949"
+                  quantityOfOperationAttempts: "2"
+                  chosenOperation: "unblokUser"
+                  requestLogsOpenAI: "{}"
+                  responseErrorLogsOpenAI: "{}"
+                  quantityOfCallsToFalconFlowAPI: "2"
+                  requestLogsFalconFlowAPI: "{}"
+                  responseErrorLogsFalconFlowAPI: "{}"
+                  provider: "openai"
+                  product: "whisper"
+                  usage: 15
+                  price: "0.006"
+                  billingBy: "minute"
+                  billingUnit: 1
+                  total_cost: "0.0015000000"
+                  _id: "66a8df390cbb7371c4ade653"
+                  createdAt: "2024-07-30T12:40:25.782Z"
+                  updatedAt: "2024-07-30T12:40:25.782Z"
+                  __v: 0
       deprecated: false
       security:
       - bearer: []
