@@ -79,7 +79,7 @@ const registerUsage = async (req, res) => {
             billingBy,
             billingUnit,
             companyId,
-            total_cost: calculateApiUsage(price, billingUnit, usage, billingBy)
+            total_cost: calculateApiUsage(price, billingUnit, usage)
         })
 
         return res.status(StatusCodes.OK).json({ apiUsage })
@@ -182,7 +182,7 @@ const registerAll = async (req, res) => {
                     billingBy,
                     billingUnit,
                     companyId,
-                    total_cost: calculateApiUsage(price, billingUnit, usage, billingBy)
+                    total_cost: calculateApiUsage(price, billingUnit, usage)
                 })
 
             }
