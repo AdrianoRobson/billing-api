@@ -28,7 +28,7 @@ const apiUsageWhatsapp = new Schema({
         required: true
     },
     billable: {
-        type: Boolean, 
+        type: String, 
         require: true
     },
     pricing_model: {
