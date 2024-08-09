@@ -9,6 +9,7 @@ const billingSumUsage = require("../utils/billingSumUsage.js")
 const moment = require('moment')
 const API_Call = require("../models/API_Call.js")
 const API_Operation = require("../models/API_Operation.js")
+const API_Usage_Whatsapp = require("../models/API_Usage_Whatsapp.js")
 
 const setApiPricing = async (req, res) => {
 
@@ -23,7 +24,12 @@ const setApiPricing = async (req, res) => {
     const normalizedProvider = provider.trim().toLowerCase()
     const normalizedProduct = product.trim().toLowerCase()
 
-    const filter = { provider: normalizedProvider, product: normalizedProduct }
+    let filter = { provider: normalizedProvider, product: normalizedProduct }
+
+    if (type) {
+        filter = { ...filter, type }
+    }
+
     const update = {
         provider: normalizedProvider,
         product: normalizedProduct,
@@ -47,14 +53,14 @@ const registerUsage = async (req, res) => {
         usage,
         callerId,
         sessionId,
-        companyId, 
+        companyId,
 
     } = req.body
 
     mustContainProperties(req, [
         'companyId',
         'callerId',
-        'sessionId', 
+        'sessionId',
         'provider',
         'product',
         'usage',
@@ -73,7 +79,7 @@ const registerUsage = async (req, res) => {
             provider: provider.trim().toLowerCase(),
             product: product.trim().toLowerCase(),
             callerId,
-            sessionId, 
+            sessionId,
             usage,
             price,
             billingBy,
@@ -83,6 +89,60 @@ const registerUsage = async (req, res) => {
         })
 
         return res.status(StatusCodes.OK).json({ apiUsage })
+
+    }
+
+    res.status(StatusCodes.NOT_FOUND).json({ msg: `Price not found for ${product} in the API Pricing table` })
+
+}
+
+const registerWhatsappUsage = async (req, res) => {
+    const {
+        companyId,
+        provider,
+        product,
+        type,
+        msgId,
+        ticketId,
+        billable,
+        pricing_model,
+    } = req.body
+
+    mustContainProperties(req, [
+        'companyId',
+        'provider',
+        'product',
+        'type',
+        'msgId',
+        'ticketId',
+        'billable',
+        'pricing_model'
+    ])
+
+    const apiPricing = await API_Pricing.findOne({
+        provider: provider.trim().toLowerCase(),
+        product: product.trim().toLowerCase(),
+        type: type.trim().toLowerCase(),
+    })
+
+
+    if (apiPricing) {
+
+        const { price } = apiPricing
+
+        const apiUsageWhatsapp = await API_Usage_Whatsapp.create({
+            companyId,
+            provider: provider.trim().toLowerCase(),
+            product: product.trim().toLowerCase(),
+            price,
+            msgId,
+            ticketId,
+            billable,
+            pricing_model,
+            type
+        })
+
+        return res.status(StatusCodes.OK).json({ apiUsageWhatsapp })
 
     }
 
@@ -129,12 +189,12 @@ const registerOperation = async (req, res) => {
         operation,
         quantityOfOperationAttempts: quantityOfAttempts,
     } = req.body
-  
+
     mustContainProperties(req, [
         'companyId',
         'callerId',
         'sessionId',
-        'operation', 
+        'operation',
     ])
 
     const apiOperation = await API_Operation.create({
@@ -176,7 +236,7 @@ const registerAll = async (req, res) => {
                     provider: provider.trim().toLowerCase(),
                     product: product.trim().toLowerCase(),
                     callerId,
-                    sessionId, 
+                    sessionId,
                     usage,
                     price,
                     billingBy,
@@ -223,7 +283,7 @@ const registerAll = async (req, res) => {
         }
     }
 
-    res.send(StatusCodes.OK) 
+    res.send(StatusCodes.OK)
 }
 
 const getUsage = async (req, res) => {
@@ -255,5 +315,6 @@ module.exports = {
     registerAPICall,
     registerOperation,
     getUsage,
-    registerAll
+    registerAll,
+    registerWhatsappUsage
 }

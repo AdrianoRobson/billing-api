@@ -2,16 +2,16 @@ const mongoose = require('../db/connect')
 
 const { Schema } = mongoose
 
-const apiUsage = new Schema({
+const apiUsageWhatsapp = new Schema({
     companyId: {
         type: String,
         required: true,
     },
-    callerId: {
+    msgId: {
         type: String,
         required: true,
     },
-    sessionId: {
+    ticketId: {
         type: String,
         required: true,
     },    
@@ -22,30 +22,26 @@ const apiUsage = new Schema({
     product: {
         type: String,
         required: true,
-    },    
-    usage: {
-        type: String,
-        required: true
-    },
+    },      
     price: {
         type: String,
         required: true
     },
-    billingBy: {
-        type: String, 
-        required: true,
+    billable: {
+        type: Boolean, 
+        require: true
     },
-    billingUnit: {
-        type: Number,
-        required: true
-    },     
-    total_cost: {
+    pricing_model: {
         type: String,
-        required: true
-    } 
+        default: true 
+    },
+    type: {
+        type: String,
+        required: true,
+    },       
 
 }, { timestamps: true })
  
-const API_Usage = mongoose.model('API_Usage', apiUsage)
+const API_Usage_Whatsapp = mongoose.model('API_Usage_Whatsapp', apiUsageWhatsapp)
 
-module.exports = API_Usage
+module.exports = API_Usage_Whatsapp
