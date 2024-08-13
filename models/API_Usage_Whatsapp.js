@@ -7,11 +7,23 @@ const apiUsageWhatsapp = new Schema({
         type: String,
         required: true,
     },
+    companyPhone: {
+        type: String,
+        required: true,
+    },
+    clientPhone: {
+        type: String,
+        required: true,
+    },
     msgId: {
         type: String,
         required: true,
     },
     ticketId: {
+        type: String,
+        required: true,
+    },    
+    ticketUrl: {
         type: String,
         required: true,
     },    

@@ -99,11 +99,14 @@ const registerUsage = async (req, res) => {
 const registerWhatsappUsage = async (req, res) => {
     const {
         companyId,
+        companyPhone,
+        clientPhone,
         provider,
         product,
         type,
         msgId,
         ticketId,
+        ticketUrl,
         billable,
         pricing_model,
     } = req.body
@@ -116,7 +119,9 @@ const registerWhatsappUsage = async (req, res) => {
         'msgId',
         'ticketId',
         'billable',
-        'pricing_model'
+        'pricing_model',
+        'companyPhone',
+        'clientPhone', 
     ])
 
     const apiPricing = await API_Pricing.findOne({
@@ -132,11 +137,14 @@ const registerWhatsappUsage = async (req, res) => {
 
         const apiUsageWhatsapp = await API_Usage_Whatsapp.create({
             companyId,
+            companyPhone,
+            clientPhone,
             provider: provider.trim().toLowerCase(),
             product: product.trim().toLowerCase(),
             price,
             msgId,
             ticketId,
+            ticketUrl,
             billable,
             pricing_model,
             type
