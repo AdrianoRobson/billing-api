@@ -19,7 +19,10 @@ const apiPricing = new Schema({
     price: {
         type: String,
         required: true
-    }, 
+    },
+    clientPrice: {
+         type: String,
+    },
     billingBy:{
         type: String,
         enum: ['minute', 'character', 'token', 'second', 'hour'],

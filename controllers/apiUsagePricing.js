@@ -13,7 +13,7 @@ const API_Usage_Whatsapp = require("../models/API_Usage_Whatsapp.js")
 
 const setApiPricing = async (req, res) => {
 
-    const { provider, product, currency, price, billingBy, billingUnit, type } = req.body
+    const { provider, product, currency, price, billingBy, billingUnit, type, clientPrice } = req.body
 
     mustContainProperties(req, ['provider',
         'product',
@@ -37,7 +37,8 @@ const setApiPricing = async (req, res) => {
         price,
         billingBy,
         billingUnit,
-        type
+        type,
+        clientPrice
     }
     const options = { new: true, upsert: true }
 
