@@ -13,9 +13,9 @@ const { setApiPricing,
 registerWhatsappUsage} = require('../controllers/apiUsagePricing')
 
 router.route('/create').post(authorization, setApiPricing)  
-router.route('/create-product').post(authorization, setProductPricing)
-router.route('/create-product').get(authorization, listProductPricing)
-router.route('/create-product/:id').patch(authorization, updateProductPricing)
+router.route('/product').post(authorization, setProductPricing)
+router.route('/products').get(authorization, listProductPricing)
+router.route('/product/:id').patch(authorization, updateProductPricing)
 router.route('/usage').post(authorization, registerUsage)
 router.route('/usage-whatsapp').post(authorization, registerWhatsappUsage)  
 router.route('/report').post(authorization, getUsage)  
