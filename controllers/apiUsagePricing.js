@@ -15,7 +15,7 @@ const API_Usage_Whatsapp = require("../models/API_Usage_Whatsapp.js")
 
 const setApiPricing = async (req, res) => {
 
-    const { provider, product, currency, price, billingBy, billingUnit, type, clientPrice } = req.body
+    const { provider, product, currency, price, billingBy, billingUnit, type, clientPrice, format } = req.body
 
     mustContainProperties(req, ['provider',
         'product',
@@ -40,7 +40,8 @@ const setApiPricing = async (req, res) => {
         billingBy,
         billingUnit,
         type,
-        clientPrice
+        clientPrice,
+        format
     }
     const options = { new: true, upsert: true }
 
@@ -196,6 +197,7 @@ const registerUsage = async (req, res) => {
         callerId,
         sessionId,
         companyId,
+        format
 
     } = req.body
 
@@ -227,7 +229,8 @@ const registerUsage = async (req, res) => {
             billingBy,
             billingUnit,
             companyId,
-            total_cost: calculateApiUsage(price, billingUnit, usage)
+            total_cost: calculateApiUsage(price, billingUnit, usage),
+            format
         })
 
         return res.status(StatusCodes.OK).json({ apiUsage })

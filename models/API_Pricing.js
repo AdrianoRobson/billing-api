@@ -1,43 +1,49 @@
-const mongoose = require('../db/connect')
+const mongoose = require("../db/connect");
 
-const { Schema } = mongoose
+const { Schema } = mongoose;
 
-const apiPricing = new Schema({    
+const apiPricing = new Schema(
+  {
     provider: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     product: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     currency: {
-        type: String,
-        enum: ['dollar', 'real',],
-        default: 'dollar'
+      type: String,
+      enum: ["dollar", "real"],
+      default: "dollar",
     },
     price: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     clientPrice: {
-         type: String,
+      type: String,
     },
-    billingBy:{
-        type: String,
-        enum: ['minute', 'character', 'token', 'second', 'hour'],
-        required: true,
+    billingBy: {
+      type: String,
+      enum: ["minute", "character", "token", "second", "hour"],
+      required: true,
     },
-    billingUnit:{
-        type: Number,
-        required: true
+    billingUnit: {
+      type: Number,
+      required: true,
     },
     type: {
-        type: String, 
-    }
+      type: String,
+    },
+    format: {
+      type: String,
+      enum: ["text", "audio", "image", "video"],
+    },
+  },
+  { timestamps: true }
+);
 
-}, { timestamps: true })
- 
-const API_Pricing = mongoose.model('API_Pricing', apiPricing)
+const API_Pricing = mongoose.model("API_Pricing", apiPricing);
 
-module.exports = API_Pricing
+module.exports = API_Pricing;
