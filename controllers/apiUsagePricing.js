@@ -217,6 +217,7 @@ const registerUsage = async (req, res) => {
     const apiPricing = await API_Pricing.findOne({
         provider: provider.trim().toLowerCase(),
         product: product.trim().toLowerCase(),
+        format: format?.trim().toLowerCase()
     })
 
     if (apiPricing) {
