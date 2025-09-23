@@ -28,6 +28,10 @@ const setApiPricing = async (req, res) => {
 
     let filter = { provider: normalizedProvider, product: normalizedProduct }
 
+    if(format){
+        filter = {...filter, format}
+    }
+
     if (type) {
         filter = { ...filter, type }
     }
