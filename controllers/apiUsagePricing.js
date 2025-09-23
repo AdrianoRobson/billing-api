@@ -201,7 +201,8 @@ const registerUsage = async (req, res) => {
         callerId,
         sessionId,
         companyId,
-        format
+        format,
+        usedTo
 
     } = req.body
 
@@ -235,7 +236,8 @@ const registerUsage = async (req, res) => {
             billingUnit,
             companyId,
             total_cost: calculateApiUsage(price, billingUnit, usage),
-            format
+            format,
+            usedTo
         })
 
         return res.status(StatusCodes.OK).json({ apiUsage })
