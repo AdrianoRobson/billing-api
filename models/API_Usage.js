@@ -48,6 +48,10 @@ const apiUsage = new Schema(
       type: String,
       enum: ["text", "audio", "image", "video"],
     },
+    used_to: {
+      type: String,
+      enum: ["stt", "llm", "tts"],
+    },
   },
   { timestamps: true }
 );
